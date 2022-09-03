@@ -13,12 +13,11 @@ class UserView(View):
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
 
-
     def get(self, request, id=0):
-        if(id>0):
-            users= list(User.objects.filter(id=id).values())
+        if (id > 0):
+            users = list(User.objects.filter(id=id).values())
             if len(users) > 0:
-                user=users[0]
+                user = users[0]
                 datos = {'message': "Success", 'users': user}
             else:
                 datos = {'message': "User no found ..."}
@@ -31,7 +30,6 @@ class UserView(View):
                 datos = {'message': "Users no found ..."}
             return JsonResponse(datos)
 
-
     def post(self, request):
         jd = json.loads(request.body)
         User.objects.create(nombre_user=jd['nombre_user'], apellido_user=jd['nombre_user'],
@@ -39,8 +37,26 @@ class UserView(View):
         datos = {'message': "Success"}
         return JsonResponse(datos)
 
-    def put(self, request):
-        pass
+    def put(self, request, id):
+        jd = json.loads(request.body)
+        users = list(User.objects.filter(id=id).values())
+        if len(users) > 0:
+            users = User.objects.get(id=id)
+            users.nombre_user = jd['nombre_user']
+            users.apellido_user = jd['apellido_user']
+            users.correo_user = jd['correo_user']
+            users.contraseña_user = jd['contraseña_user']
+            users.save()
+            datos = {'message': "Success"}
+        else:
+            datos = {'message': "Users no found ..."}
+        return JsonResponse(datos)
 
-    def delete(self, request):
-        pass
+    def delete(self, request, id):
+        users = list(User.objects.filter(id=id).values())
+        if len(users) > 0:
+            User.objects.filter(id=id).delete()
+            datos = {'message': "Success"}
+        else:
+            datos = {'message': "Users no found ..."}
+        return JsonResponse(datos)

@@ -8,3 +8,8 @@ class User(models.Model):
     apellido_user = models.CharField(max_length=30)
     correo_user = models.CharField(max_length=50)
     contraseña_user = models.CharField(max_length=30)
+
+
+class Categoria(models.Model):
+    nombre_categoria = models.CharField(max_length=20)
+    tipo_categoria = models.CharField(max_length=1)

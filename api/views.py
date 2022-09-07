@@ -61,7 +61,7 @@ class UserView(View):
             datos = {'message': "Users no found ..."}
         return JsonResponse(datos)
 
-
+#vista de la categoria
 class CategoriaView(View):
 
     @method_decorator(csrf_exempt)

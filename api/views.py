@@ -91,7 +91,7 @@ class CategoriaView(View):
         datos = {'message': "Success"}
         return JsonResponse(datos)
 
-    def put(self, request, id):
+    def put(self, request, id: int = 0):
         jd = json.loads(request.body)
         categories = list(Categoria.objects.filter(id=id).values())
         if len(categories) > 0:
@@ -112,3 +112,4 @@ class CategoriaView(View):
         else:
             datos = {'message': "Categoria no found ..."}
         return JsonResponse(datos)
+
